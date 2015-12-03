@@ -71,20 +71,6 @@
   + 1レコードに0〜1個。
   + [CommonMark]で記述する。
   + `text`、`image`、`audio`、`video` の解説。
-  + このフィールドの内容は、セクショニングコンテンツの直下に置かれなければならない。
-    また、見出し要素が存在し、かつ最初の見出し要素よりも前にノードが存在すれば、
-    最初の見出し以降をsection要素に内包しなければならない。
-  + 次の要素のみが含まれていなければならない。属性はグローバル属性を除いて、括弧内の属性のみ許可される。
-    この規則は、HTMLへの変換が行われたコードに対して適用される:
-    a (href), abbr, audio (src), b, bdi, bdo (dir), blockquote (cite), br,
-    caption, cite, code, col (span), colgroup (span), data (value), dd, del (datetime, src), dfn, div, dl, dt, em,
-    figcaption, figure, h1, h2, h3, h4, h5, h6, hr, i, img (alt, height, src, width), ins (datetime, src), kbd, li,
-    ol (reversed, start, type), p, pre, q (cite), rp, rt, ruby, s, samp, small, span, strong, sub, sup,
-    table (sortable), tbody, td (colspan, rowspan), tfoot, th (abbr, colspan, rowspan, scope), thead, time (datetime),
-    tr, u, ul, var, video (height, src, width), wbr
-    - 次のグローバル属性が許可される: dir, lang, title, translate
-    - href属性、cite属性の値は、[絶対URL][url-absolute]、または[素片付き絶対URL][url-absolute-with-fragment]
-      でなければならない。また、スキームは `https`、または `http` でなければならない。
 * `weight`
   + 1レコードに0〜1個。
   + 実数を指定する。1を既定値とする出題率。
@@ -107,6 +93,7 @@
   + このフィールドが存在しない場合、[拡張子を除くファイル名](#filename-without-extension)を辞書のタイトルとして利用する。
 * `summary`
   + 1つのファイルに0〜1個。ファイルの最初のレコードに値を記述する。
+  + [CommonMark]で記述する。
   + 辞書自体の説明文。
 * `regard`
   + 1つのファイルに0〜1個。ファイルの最初のレコードに値を記述する。
@@ -125,6 +112,22 @@
 [CommonMark]: http://spec.commonmark.org/0.22/
 [url-absolute]: http://www.hcn.zaq.ne.jp/___/WEB/URL-ja.html#syntax-url-absolute
 [url-absolute-with-fragment]: http://www.hcn.zaq.ne.jp/___/WEB/URL-ja.html#syntax-url-absolute-with-fragment
+
+### <a name="restrict-commonmark">CommonMarkの制限</a>
+* 全体をセクショニングコンテンツの直下に置かれなければならない。
+  また、見出し要素が存在し、かつ最初の見出し要素よりも前にノードが存在すれば、
+  最初の見出し以降をsection要素に内包しなければならない。
+* 次の要素のみが含まれていなければならない。属性はグローバル属性を除いて、括弧内の属性のみ許可される。
+  この規則は、HTMLへの変換が行われたコードに対して適用される:
+  a (href), abbr, audio (src), b, bdi, bdo (dir), blockquote (cite), br,
+  caption, cite, code, col (span), colgroup (span), data (value), dd, del (datetime, src), dfn, div, dl, dt, em,
+  figcaption, figure, h1, h2, h3, h4, h5, h6, hr, i, img (alt, height, src, width), ins (datetime, src), kbd, li,
+  ol (reversed, start, type), p, pre, q (cite), rp, rt, ruby, s, samp, small, span, strong, sub, sup,
+  table (sortable), tbody, td (colspan, rowspan), tfoot, th (abbr, colspan, rowspan, scope), thead, time (datetime),
+  tr, u, ul, var, video (height, src, width), wbr
+  - 次のグローバル属性が許可される: dir, lang, title, translate
+  - href属性、cite属性の値は、[絶対URL][url-absolute]、または[素片付き絶対URL][url-absolute-with-fragment]
+	でなければならない。また、スキームは `https`、または `http` でなければならない。
 
 ### <a name="specifics">specificsレコードのキー</a>
 | キー              | 1レコード中の数 | 値                |                                                        |
