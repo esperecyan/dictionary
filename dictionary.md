@@ -93,19 +93,6 @@
 * `type`
   + 1レコードに0〜1個。
   + 並べ替え問題など、選択肢が表示されていなければ問題が成立しない場合に、値として `selection` を指定する。
-* `title`
-  + 1つのファイルに0〜1個。ファイルの最初のレコードに値を記述する。
-  + 辞書自体のタイトル。
-  + このフィールドが存在しない場合、[拡張子を除くファイル名](#filename-without-extension)を辞書のタイトルとして利用する。
-* `summary`
-  + 1つのファイルに0〜1個。ファイルの最初のレコードに値を記述する。
-  + [CommonMark]で記述する。
-  + 辞書自体の説明文。
-* `regard`
-  + 1つのファイルに0〜1個。ファイルの最初のレコードに値を記述する。
-  + 正規表現における文字クラスで指定する。つまり、角括弧 `[` `]` で括られた文字列を指定する。
-  + コメントがどのような文字列のみで構成されていればお手付きと判断するかを決める。
-  + 省略された場合の既定値は `[〜ぁ-ゖヷ-ヺー]` である。
 
 `image`、`audio`、`video` フィールド、および `description` フィールドのsrc属性値には、
 そのCSVファイルとともに格納されているファイルの名前を指定するべきである。
@@ -118,6 +105,21 @@
 [CommonMark]: http://spec.commonmark.org/0.22/
 [url-absolute]: http://www.hcn.zaq.ne.jp/___/WEB/URL-ja.html#syntax-url-absolute
 [url-absolute-with-fragment]: http://www.hcn.zaq.ne.jp/___/WEB/URL-ja.html#syntax-url-absolute-with-fragment
+
+### <a name="meta-fields">メタフィールド</a>
+メタフィールドは、レコードではなく辞書自体に関連付けられるフィールドであり、フィールド名は `@` で始まる。
+メタフィールドは、ファイルの最初のレコードにのみ出現し、他のレコードに出現してはならない。
+
+* `@title`
+  + 辞書自体のタイトル。
+  + このフィールドが存在しない場合、[拡張子を除くファイル名](#filename-without-extension)を辞書のタイトルとして利用する。
+* `@summary`
+  + [CommonMark]で記述する。
+  + 辞書自体の説明文。
+* `@regard`
+  + 正規表現における文字クラスで指定する。つまり、角括弧 `[` `]` で括られた文字列を指定する。
+  + コメントがどのような文字列のみで構成されていればお手付きと判断するかを決める。
+  + 省略された場合の既定値は `[〜ぁ-ゖヷ-ヺー]` である。
 
 ### <a name="restrict-commonmark">CommonMarkの制限</a>
 * 全体をセクショニングコンテンツの直下に置かれなければならない。
@@ -253,7 +255,7 @@
 ### 画像や解説などを含む形
 
 ```csv
-text,image,answer,answer,description,title,summary
+text,image,answer,answer,description,@title,@summary
 太陽,sun.png,たいよう,おひさま,恒星。,天体,恒星、惑星、衛星などのリスト。
 地球,earth.png,ちきゅう,,惑星。,,
 カロン,charon.png,,,"冥王星の衛星。
@@ -267,22 +269,22 @@ text,image,answer,answer,description,title,summary
 引用元: [カロン (衛星) - Wikipedia](https://ja.wikipedia.org/wiki/%E3%82%AB%E3%83%AD%E3%83%B3_(%E8%A1%9B%E6%98%9F))",,
 ```
 
-| text   | image      | answer   | answer   | description | title | summary                        |
-|--------|------------|----------|----------|-------------|-------|--------------------------------|
-| 太陽   | sun.png    | たいよう | おひさま | 恒星。      | 天体  | 恒星、惑星、衛星などのリスト。 | 
-| 地球   | earth.png  | ちきゅう |          | 惑星。      |       |                                |
+| text   | image      | answer   | answer   | description | @title | @summary                       |
+|--------|------------|----------|----------|-------------|--------|--------------------------------|
+| 太陽   | sun.png    | たいよう | おひさま | 恒星。      | 天体   | 恒星、惑星、衛星などのリスト。 | 
+| 地球   | earth.png  | ちきゅう |          | 惑星。      |        |                                |
 | カロン | charon.png |          |          | "冥王星の衛星。<br><br>> カロンは1978年6月22日にアメリカの天文学者ジェームズ・クリスティーによって発見された。<br>> その後、冥王星が冥府の王プルートーの名に因むことから、<br>> この衛星はギリシア神話の冥府の川・アケローンの渡し守カローンにちなんで「カロン」と命名された。<br>> なおクリスティーは当初から一貫してCharonの「char」を<br>> 妻シャーリーン（Charlene） のニックネーム「シャー（Char）」と同じように発音していたため、<br>> これが英語圏で定着して「シャーロン」と呼ばれるようになった。<br>引用元: \[カロン (衛星) - Wikipedia](https\://ja.wikipedia.org/wiki/%E3%82%AB%E3%83%AD%E3%83%B3_(%E8%A1%9B%E6%98%9F))" | |
 
 ### 音声ファイルを含む形
 
 ```csv
-text,audio,specifics,answer,answer,title
+text,audio,specifics,answer,answer,@title
 四季,four-seasons.mp4,start=50&length=3,しき,はる,クラシック音楽
 魔王,erlking.mp4,,まおう,,,
 ラデツキー行進曲,radetzky-march.mp4,,らでつきーこうしんきょく,,,
 ```
 
-| text             | audio              | specifics         | answer                   | answer | title          |
+| text             | audio              | specifics         | answer                   | answer | @title         |
 |------------------|--------------------|-------------------|--------------------------|--------|----------------|
 | 四季             | four-seasons.mp4   | start=50&length=3 | しき                     | はる   | クラシック音楽 |
 | 魔王             | erlking.mp4        |                   | まおう                   |        |                | 
@@ -291,7 +293,7 @@ text,audio,specifics,answer,answer,title
 ### お題の出題頻度の設定 (重み付け)
 
 ```csv
-text,weight,description,title
+text,weight,description,@title
 よめ,3,このお題は他のお題の3倍出題されやすい。,ポケモン
 ピカチュウ,,,
 カイリュー,,,
@@ -299,7 +301,7 @@ text,weight,description,title
 ミュウ,0.5,このお題は他のお題より出題されにくい。,
 ```
 
-| text       | weight | description                             | title    |
+| text       | weight | description                             | @title   |
 |------------|--------|-----------------------------------------|----------|
 | よめ       | 3      | このお題は他のお題の3倍出題されやすい。 | ポケモン |
 | ピカチュウ |        |                                         |          |
@@ -311,7 +313,7 @@ text,weight,description,title
 
 以降、CSVを省略して表としての例のみ示す。
 
-| text                             | image   | question                                                     | option | option | option | option   | answer   | answer | specifics            | type      | description                                        | title              |
+| text                             | image   | question                                                     | option | option | option | option   | answer   | answer | specifics            | type      | description                                        | @title             |
 |----------------------------------|---------|--------------------------------------------------------------|--------|--------|--------|----------|----------|--------|----------------------|-----------|----------------------------------------------------|--------------------|
 | 太陽                             | sun.png |                                                              | 太陽   | 地球   | カロン |          | たいよう |        |                      |           | 最初の選択肢 (ここでは「太陽」) を答えとして扱う。 | 選択・並べ替え問題 |
 | 林檎                             |         | 仲間外れはどれでしょう                                       | リンゴ | ゴリラ | ラクダ | ダチョウ | リンゴ   |        |                      | selection | 選択肢を表示しなければ問題が成立しない場合。       |                    |
@@ -323,7 +325,7 @@ text,weight,description,title
 
 ### ひらがな以外で答える辞書・正規表現を含む辞書
 
-| text        | answer   | answer         | title  | regard              |
+| text        | answer   | answer         | @title | @regard             |
 |-------------|----------|----------------|--------|---------------------|
 | title       | たいとる |                | 英単語 | [a-z〜ぁ-ゖヷ-ヺー] |
 | description |          |                |        |                     |
