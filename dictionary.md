@@ -11,6 +11,7 @@
 * <a name="ascii-fullwidth">「ASCII全角形」</a>とは、`！` (U+FF01) 〜 `～` (U+FF5E) である。
 * <a name="controls">「制御文字」</a>とは、[Unicode Other カテゴリ (\\p{C})][tr44] に属する文字である。
 * <a name="whitespace">「空白文字」</a>とは、[Unicode Separator カテゴリ (\\p{Z})][tr44] に属する文字である。
+* <a name="katakana-halfwidth">「半角カナ」</a>とは、`｡` (U+FF61) 〜 `ﾟ` (U+FF9F) である。
 * <a name="hiragana">「ひらがな」</a>とは、`〜` (U+301C)、`ぁ` (U+3041) 〜 `ゖ` (U+3096)、`ー` (U+30FC) である。
 * <a name="katakana">「カタカナ」</a>とは、`〜` (U+301C)、`ァ` (U+30A1) 〜 `ヺ` (U+30FA)、`ー` (U+30FC)、
   `ㇰ` (U+31F0) 〜 `ㇿ` (U+31FF) である。
@@ -57,7 +58,8 @@
   + 1個目のフィールドは[ヒントに利用される文字列](#hint-string)となる。
     1個めのフィールドは [正規表現文字列](#regexp) であってはならない。
   + このフィールドが1個も存在しない場合、`text` フィールド値が1個目の `answer` フィールド値として利用される。
-  + [ASCII全角形](#ascii-fullwidth)、[制御文字](#controls)、[空白文字](#whitespace)、結合文字を含んではならない。
+  + [ASCII全角形](#ascii-fullwidth)、[制御文字](#controls)、[空白文字](#whitespace)、[半角カナ](#katakana-halfwidth)、
+    結合文字を含んではならない。
   + ゲーム中では[ASCII小文字化][ascii-lowercase]、[カタカナをひらがな化](#katakana-to-hiragana)、
     `~` (U+007E) を `〜` (U+301C) に置き換えて扱わなければならない。
   + `type` フィールドに `selection` が指定されている場合、`option` フィールドのいずれかと同一の文字列でなければならない。 
