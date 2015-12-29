@@ -59,6 +59,12 @@
 * `video`
   + 1レコードに0〜1個。
   + レコードに関連付けられる動画ファイル名。主に「`description` の一部となる動画」を表す。
+* `image-srouce` `audio-srouce` `video-srouce`
+  + それぞれ1レコードに0〜1個。
+    これらのフィールドが存在する場合、対応する `image` `audio` `video` フィールドが存在しなければならない。
+  + [出所を記述するためのCommonMark](#srouce-commonmark)で記述する。
+  + 主に「対応するフィールドで指定されたファイルが引用である」ことを表す。
+  + フィールドの値は、対応するフィールドで指定されたファイルの出所でなければならない。
 * `answer`
   + 1レコードに0個以上。
   + 主に「ゲームの参加者が答えとして入力する文字列」を表す。
@@ -139,6 +145,15 @@
   tr, u, ul, var, video (height, src, width), wbr
   - 次のグローバル属性が許可される: dir, lang, title, translate
   - href属性、cite属性の値は、[絶対URL][url-absolute]、または[素片付き絶対URL][url-absolute-with-fragment]
+	でなければならない。また、スキームは `https`、または `http` でなければならない。
+
+### <a name="srouce-commonmark">出所を記述するためのCommonMark</a>
+* セクショニングコンテンツの直下に置かれなくてもよい。
+* 次の要素のみが含まれていなければならない。属性はグローバル属性を除いて、括弧内の属性のみ許可される。
+  この規則は、HTMLへの変換が行われたコードに対して適用される:
+  a (href), b, bdi, bdo (dir), br, cite, i, rp, rt, ruby, sub, sup, time (datetime), u, wbr
+  - 次のグローバル属性が許可される: dir, lang, title, translate
+  - href属性の値は、[絶対URL][url-absolute]、または[素片付き絶対URL][url-absolute-with-fragment]
 	でなければならない。また、スキームは `https`、または `http` でなければならない。
 
 ### <a name="specifics">specificsフィールドの名前</a>
