@@ -97,7 +97,7 @@
   + `text`、`image`、`audio`、`video` の解説。
 * `weight`
   + 1レコードに0〜1個。
-  + 実数を指定する。1を既定値とする出題率。
+  + 0より大きい[実数](#real-number)を指定する。1を既定値とする出題率。
 * `specifics`
   + 1レコードに0〜1個。
   + レコードに対する追加設定を [application/x-www-form-urlencoded]形式で記述する。
