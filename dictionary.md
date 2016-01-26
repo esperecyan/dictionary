@@ -160,7 +160,7 @@
 * セクショニングコンテンツの直下に置かれなくてもよい。
 * 次の要素のみが含まれていなければならない。属性はグローバル属性を除いて、括弧内の属性のみ許可される。
   この規則は、HTMLへの変換が行われたコードに対して適用される:
-  a (href), b, bdi, bdo (dir), br, cite, i, rp, rt, ruby, sub, sup, time (datetime), u, wbr
+  a (href), b, bdi, bdo (dir), br, cite, i, p, rp, rt, ruby, sub, sup, time (datetime), u, wbr
   - 次のグローバル属性が許可される: dir, lang, title, translate
   - href属性の値は、[絶対URL][url-absolute]、または[素片付き絶対URL][url-absolute-with-fragment]
 	でなければならない。また、スキームは `https`、または `http` でなければならない。
