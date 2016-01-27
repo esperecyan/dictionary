@@ -291,9 +291,10 @@ RFC4180の章 [2. Definition of the CSV Format] の矛盾する点について�
   「The ABNF grammar」の `non-escaped = *TEXTDATA` を優先し、 _should_ ではなく _must_ とする。
 * 「The ABNF grammar」の規則について、以下のように変更する。これらの変更を適用した「The ABNF grammar」を後述する。
   - `file = [header CRLF] record *(CRLF record) [CRLF]` は、ファイル末尾の改行と空文字列フィールドを区別できないため、
-    `file = [header CRLF] (record CRLF)* (non-empty-record [CRLF] / empty-record CRLF)` とし、
-    `non-empty-record = escaped / non-empty-non-escaped` `empty-record = empty-field`
-    `empty-field = empty-non-escaped` `non-empty-non-escaped =  1*TEXTDATA` `empty-non-escaped = 0TEXTDATA` を追加する。
+    `file = [header CRLF] *(record CRLF) (empty-record CRLF / non-empty-record [CRLF])` とし、
+    `non-empty-record = (non-empty-field / field 1*(COMMA field))` `empty-record = empty-field`
+    `non-empty-field = (escaped / non-empty-non-escaped)` `empty-field = empty-non-escaped`
+    `non-empty-non-escaped =  1*TEXTDATA` `empty-non-escaped = 0TEXTDATA` を追加する。
   - `escaped = DQUOTE *(TEXTDATA / COMMA / CR / LF / 2DQUOTE) DQUOTE` は、
    「6. Fields containing line breaks (CRLF), double quotes, and commas should be enclosed in double-quotes.」が
     CRLF改行のみを想定していると解釈し、`escaped = DQUOTE *(TEXTDATA / COMMA / CRLF / 2DQUOTE) DQUOTE` とする。
@@ -303,19 +304,21 @@ RFC4180の章 [2. Definition of the CSV Format] の矛盾する点について�
     `TEXTDATA =  %x20-21 / %x23-2B / %x2D-7E / %xA0-10FFFD` とする。
 
 ```
-file = [header CRLF] (record CRLF)* (empty-record CRLF / non-empty-record [CRLF])
+file = [header CRLF] *(record CRLF) (empty-record CRLF / non-empty-record [CRLF])
 
 header = name *(COMMA name)
 
 record = field *(COMMA field)
 
-empty-record = empty-field
+non-empty-record = (non-empty-field / field 1*(COMMA field))
 
-non-empty-record = escaped / non-empty-non-escaped
+empty-record = empty-field
 
 name = field
 
 field = (escaped / non-escaped)
+
+non-empty-field = (escaped / non-empty-non-escaped)
 
 empty-field = empty-non-escaped
 
