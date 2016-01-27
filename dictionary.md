@@ -11,7 +11,6 @@
 * <a name="ascii-fullwidth">「ASCII全角形」</a>とは、`！` (U+FF01) 〜 `～` (U+FF5E) である。
 * <a name="controls">「制御文字」</a>とは、[Unicode Other カテゴリ (\\p{C})][tr44] に属する文字である。
 * <a name="whitespace">「空白文字」</a>とは、[Unicode Separator カテゴリ (\\p{Z})][tr44] に属する文字である。
-* <a name="katakana-halfwidth">「半角カナ」</a>とは、`｡` (U+FF61) 〜 `ﾟ` (U+FF9F) である。
 * <a name="combining">「結合文字」</a>とは、[Unicode Mark カテゴリ (\\p{M})][tr44] に属する文字である。
 * <a name="hiragana">「ひらがな」</a>とは、`〜` (U+301C)、`ぁ` (U+3041) 〜 `ゖ` (U+3096)、`ー` (U+30FC) である。
 * <a name="katakana">「カタカナ」</a>とは、`〜` (U+301C)、`ァ` (U+30A1) 〜 `ヺ` (U+30FA)、`ー` (U+30FC)、
@@ -20,8 +19,6 @@
 * 文字列中の<a name="katakana-to-hiragana">「カタカナをひらがな化」</a>するときは、各文字に対して、
   それが[ひらがな化可能なカタカナ](#replaceable-katakana)であるなら、
   `ぁ` (U+3041) 〜 `ゖ` (U+3096) の対応する文字に置き換える。
-* <a name="ascii-halfwidth">「ASCII半角化」</a>するときは、各文字に対して、
-  それが[ASCII全角形](#ascii-fullwidth)であるなら、`!` (U+0021) 〜 `~` (U+007E) の対応する文字に置き換える。
 * <a name="integer">「整数」</a>とは、正規表現 `/^(0|-?[1-9][0-9]*)$/` に一致する10進数である。
 * <a name="real-number">「実数」</a>とは、
   正規表現 `/^((0|-?[1-9][0-9]*)|-?(0|[1-9][0-9]*)\.[0-9]*[1-9])$/` に一致する10進数である。
@@ -78,8 +75,8 @@
   + 1個目のフィールドは[ヒントに利用される文字列](#hint-string)となる。
     1個めのフィールドは [正規表現文字列](#regexp) であってはならない。
   + このフィールドが1個も存在しない場合、`text` フィールド値が1個目の `answer` フィールド値として利用される。
-  + [ASCII全角形](#ascii-fullwidth)、[制御文字](#controls)、[空白文字](#whitespace)、[半角カナ](#katakana-halfwidth)、
-    [結合文字](#combining)を含んではならない。
+  + [NFKC]適用後に、変化する文字列であってはならない。
+  + [制御文字](#controls)、[空白文字](#whitespace)、[結合文字](#combining)を含んではならない。
   + ゲーム中では[ASCII小文字化][ascii-lowercase]、[カタカナをひらがな化](#katakana-to-hiragana)、
     [同一視する文字](#equivalent)表の置換前列の文字を置換後列の文字に置き換えて扱わなければならない。
   + `type` フィールドに `selection` が指定されている場合、`option` フィールドのいずれかと同一の文字列でなければならない。 
@@ -118,6 +115,7 @@
 それ以外の場合は、[画像・音声・動画ファイルを含む場合のファイル形式](#with-image-audio-video)で規定されるファイル名に
 合致しなければならず、表[拡張子](#extension)で示される拡張子以外を用いてはならない。
 
+[NFKC]: https://wiki.suikawiki.org/n/NFKC
 [ascii-lowercase]: http://www.hcn.zaq.ne.jp/___/WEB/URL-ja.html#ascii-lowercase
 [application/x-www-form-urlencoded]: http://www.hcn.zaq.ne.jp/___/WEB/URL-ja.html#application/x-www-form-urlencoded
 [pattern]: https://developer.mozilla.org/docs/Web/HTML/Element/Input#attr-pattern
@@ -261,7 +259,7 @@
   + 実装側で設定した制限を超えた部分を除去した場合、
     除去が行われた辞書データを基に再出力された辞書ファイルは、元の辞書ファイルとは異なる辞書として扱うべきである。
 * 「ゲームの参加者が入力した文字列」についてお手付きや正誤の判定を行う場合、
-  [ASCII半角化](#ascii-halfwidth)した後、[ASCII小文字化][ascii-lowercase]、
+  [NFKC]を適用した後、[ASCII小文字化][ascii-lowercase]、
   [同一視する文字](#equivalent)表の置換前列の文字を置換後列の文字に置き換えて扱わなければならない。
 * 辞書ファイルを再出力する際、未知のフィールド名のフィールドを除去してはならない。
   また、同名フィールドの出現数が制限されている場合も、制限を超えた部分のフィールドを除去してはならない。
