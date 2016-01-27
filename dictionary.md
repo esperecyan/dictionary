@@ -27,7 +27,8 @@
 
 <a name="base">基底となるファイル形式</a>
 --------------------------------------------------------------------------------
-* ファイル形式は[RFC4180]に準拠した[CSV]でなければならない。
+* ファイル形式は、[RFC4180]、[RFC7111]に準拠した[CSV]でなければならない。
+  同仕様は[RFC4180、RFC7111の解釈](#rfc4180-7111)に沿って解釈する。
 * 符号化方式は[utf-8]でなければならない。
 * カンマ `,`、または改行コード (CRLF) を含むフィールドは引用符 `"` で括らなければならない。
 * フィールド名は空文字列であってはならない。
@@ -35,6 +36,7 @@
 * フィールド長に制限はないが、実装は受け入れるフィールド長を制限してもよい。
 
 [RFC4180]: http://www.7key.jp/rfc/rfc4180.html
+[RFC7111]: https://tools.ietf.org/html/rfc7111
 [CSV]: https://ja.wikipedia.org/wiki/Comma-Separated_Values
 [utf-8]: https://ja.wikipedia.org/wiki/UTF-8
 
@@ -277,6 +279,67 @@
 | `'` (U+0027)  | `’` (U+2019) |
 | `"` (U+0022)  | `”` (U+201D) |
 | `“` (U+201C) | `”` (U+201D) |
+
+<a name="rfc4180-7111">[RFC4180]、[RFC7111]の解釈</a>
+--------------------------------------------------------------------------------
+RFC4180の章 [2. Definition of the CSV Format] の矛盾する点について、以下のように解釈する。
+
+* 「6. Fields containing line breaks (CRLF), double quotes, and commas _should_ be enclosed in double-quotes.」は、
+  「The ABNF grammar」の `non-escaped = *TEXTDATA` を優先し、 _should_ ではなく _must_ とする。
+* 「The ABNF grammar」の規則について、以下のように変更する。これらの変更を適用した「The ABNF grammar」を後述する。
+  - `file = [header CRLF] record *(CRLF record) [CRLF]` は、ファイル末尾の改行と空文字列フィールドを区別できないため、
+    `file = [header CRLF] (record CRLF)* (non-empty-record [CRLF] / empty-record CRLF)` とし、
+    `non-empty-record = escaped / non-empty-non-escaped` `empty-record = empty-field`
+    `empty-field = empty-non-escaped` `non-empty-non-escaped =  1*TEXTDATA` `empty-non-escaped = 0TEXTDATA` を追加する。
+  - `escaped = DQUOTE *(TEXTDATA / COMMA / CR / LF / 2DQUOTE) DQUOTE` は、
+   「6. Fields containing line breaks (CRLF), double quotes, and commas should be enclosed in double-quotes.」が
+    CRLF改行のみを想定していると解釈し、`escaped = DQUOTE *(TEXTDATA / COMMA / CRLF / 2DQUOTE) DQUOTE` とする。
+  - `TEXTDATA =  %x20-21 / %x23-2B / %x2D-7E` は、RFC7111「[5.1. The text/csv media type]」の
+    「Any charset defined by IANA for the "text" tree may be used in conjunction with the "charset" parameter.」から
+    [ASCII符号位置][ascii-code-point]以外の文字も扱えると考えられるため、
+    `TEXTDATA =  %x20-21 / %x23-2B / %x2D-7E / %xA0-10FFFD` とする。
+
+```
+file = [header CRLF] (record CRLF)* (empty-record CRLF / non-empty-record [CRLF])
+
+header = name *(COMMA name)
+
+record = field *(COMMA field)
+
+empty-record = empty-field
+
+non-empty-record = escaped / non-empty-non-escaped
+
+name = field
+
+field = (escaped / non-escaped)
+
+empty-field = empty-non-escaped
+
+escaped = DQUOTE *(TEXTDATA / COMMA / CRLF / 2DQUOTE) DQUOTE
+
+non-escaped = *TEXTDATA
+
+non-empty-non-escaped =  1*TEXTDATA
+
+empty-non-escaped = 0TEXTDATA
+
+COMMA = %x2C
+
+CR = %x0D ;as per section 6.1 of RFC 2234 [2]
+
+DQUOTE =  %x22 ;as per section 6.1 of RFC 2234 [2]
+
+LF = %x0A ;as per section 6.1 of RFC 2234 [2]
+
+CRLF = CR LF ;as per section 6.1 of RFC 2234 [2]
+
+TEXTDATA =  %x20-21 / %x23-2B / %x2D-7E / %xA0-10FFFD
+```
+
+[2. Definition of the CSV Format]: https://tools.ietf.org/html/rfc4180#section-2
+[5.1. The text/csv media type]: https://tools.ietf.org/html/rfc7111#section-5.1
+[ascii-code-point]: http://www.hcn.zaq.ne.jp/___/WEB/Encoding-ja.html#ascii-code-point
 
 <a name="example">辞書ファイルの例</a>
 --------------------------------------------------------------------------------
