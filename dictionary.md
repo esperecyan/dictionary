@@ -4,6 +4,23 @@
 --------------------------------------------------------------------------------
 * <a name="filename-without-extension">「拡張子を除くファイル名」</a>とは、
   ファイル名について、先頭から最初に登場するフルストップ `.` の手前までの部分である。
+* <a name="file-location">「ファイル所在」</a>は、次のいずれかである:
+  + それが記述されているCSVファイルとともにアーカイブに格納されているファイルの名前。
+  + [Webサービス識別子]、ソリダス `/`、[妥当なファイル名](#valid-filename)の並び。
+* <a name="web-service-identifier">「Webサービス識別子」</a>はファイルの所在場所を表す文字列であり、
+  [ASCII数字][ascii-digits]、[ASCII英小文字](#ascii-lowercase-alpha)、ハイフンマイナス `-` のみを含む文字列、
+  あるいは[ドメイン][domain]である。
+* <a name="valid-filename">「妥当なファイル名」</a>とは、
+  [拡張子を除くファイル名](#filename-without-extension)が次の規則に合致する文字列である。
+  また、拡張子は、表[拡張子](#extension)で示すものに合致する。
+  + [制御文字](#controls)、および `"` `*` `.` `/` `:` `<` `>` `?` `\` `|` を含んではならない。
+  + 先頭、末尾が[空白文字](#whitespace)であってはならない。
+    また、[空白文字](#whitespace)単体、および空文字列であってはならない。
+  +  [ASCII文字大小無視][ascii-case-insensitive]で、次のいずれにも一致しない:
+    `CON` `PRN` `AUX` `CLOCK$` `NUL` `COM1` `COM2` `COM3` `COM4` `COM5` `COM6` `COM7` `COM8` `COM9`
+    `LPT1` `LPT2` `LPT3` `LPT4` `LPT5` `LPT6` `LPT7` `LPT8` `LPT9`
+  + [NFC]適用後に、変化する文字列であってはならない。
+
 * <a name="ascii-uppercase-alpha">「ASCII英大文字」</a>とは、`A` (U+0041) 〜 `Z` (U+005A) である。
 * <a name="ascii-lowercase-alpha">「ASCII英小文字」</a>とは、`a` (U+0061) 〜 `z` (U+007A) である。
 * <a name="hint-string">「ヒントに利用される文字列」</a> は、文字数や先頭・末尾の文字・文字列を
@@ -23,6 +40,10 @@
 * <a name="real-number">「実数」</a>とは、
   正規表現 `/^((0|-?[1-9][0-9]*)|-?(0|[1-9][0-9]*)\.[0-9]*[1-9])$/` に一致する10進数である。
 
+[ascii-digits]: http://www.hcn.zaq.ne.jp/___/WEB/URL-ja.html#ascii-digits
+[domain]: http://www.hcn.zaq.ne.jp/___/WEB/URL-ja.html#syntax-host-domain
+[ascii-case-insensitive]: http://www.hcn.zaq.ne.jp/___/WEB/DOM4-ja.html#ascii-case-insensitive
+[NFC]: https://wiki.suikawiki.org/n/NFC
 [tr44]: http://www.unicode.org/reports/tr44/#GC_Values_Table
 
 <a name="base">基底となるファイル形式</a>
@@ -57,13 +78,16 @@
   + `answer` フィールドが1個も存在しない場合、`answer` フィールドの規則に違反しない文字列でなければならない。
 * `image`
   + 1レコードに0〜1個。
+  + [ファイル所在](#file-location)を指定する。
   + レコードに関連付けられる画像ファイル名。
     主に「モザイク画像当てクイズにおける画像」「`description` の一部となる画像」を表す。
 * `audio`
   + 1レコードに0〜1個。
+  + [ファイル所在](#file-location)を指定する。
   + レコードに関連付けられる音声ファイル名。主に「イントロクイズ」「`description` の一部となる音声」を表す。
 * `video`
   + 1レコードに0〜1個。
+  + [ファイル所在](#file-location)を指定する。
   + レコードに関連付けられる動画ファイル名。主に「`description` の一部となる動画」を表す。
 * `image-source` `audio-source` `video-source`
   + それぞれ1レコードに0〜1個。
@@ -115,11 +139,6 @@
   + 1レコードに0〜1個。
   + 並べ替え問題など、選択肢が表示されていなければ問題が成立しない場合に、値として `selection` を指定する。
 
-`image`、`audio`、`video` フィールド、および[CommonMark]で記述するフィールドのsrc属性値には、
-そのCSVファイルとともに格納されているファイルの名前を指定するべきである。
-それ以外の場合は、[画像・音声・動画ファイルを含む場合のファイル形式](#with-image-audio-video)で規定されるファイル名に
-合致しなければならず、表[拡張子](#extension)で示される拡張子以外を用いてはならない。
-
 [NFKC]: https://wiki.suikawiki.org/n/NFKC
 [ascii-lowercase]: http://www.hcn.zaq.ne.jp/___/WEB/URL-ja.html#ascii-lowercase
 [application/x-www-form-urlencoded]: http://www.hcn.zaq.ne.jp/___/WEB/URL-ja.html#application/x-www-form-urlencoded
@@ -158,6 +177,7 @@
   - 次のグローバル属性が許可される: dir, lang, title, translate
   - href属性、cite属性の値は、[絶対URL][url-absolute]、または[素片付き絶対URL][url-absolute-with-fragment]
 	でなければならない。また、スキームは `https`、または `http` でなければならない。
+  - src属性の値は、[ファイル所在](#file-location)でなければならない。
 
 ### <a name="source-commonmark">出所を記述するためのCommonMark</a>
 * セクショニングコンテンツの直下に置かれなくてもよい。
@@ -217,8 +237,6 @@
   また、圧縮後の容量は512MiB以下にするべきである。実装は受け入れる容量を制限してもよい。
 * アーカイブ中のファイル数は10000個以下でなければならない。また、2000個以下にするべきである。
   実装は受け入れるファイル数を制限してもよい。
-
-[ascii-digits]: http://www.hcn.zaq.ne.jp/___/WEB/URL-ja.html#ascii-digits
 
 ### <a name="extension">拡張子</a>
 | ファイル形式            | 拡張子              |
