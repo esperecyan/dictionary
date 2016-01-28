@@ -6,7 +6,7 @@
   ファイル名について、先頭から最初に登場するフルストップ `.` の手前までの部分である。
 * <a name="file-location">「ファイル所在」</a>は、次のいずれかである:
   + それが記述されているCSVファイルとともにアーカイブに格納されているファイルの名前。
-  + [Webサービス識別子]、ソリダス `/`、[妥当なファイル名](#valid-filename)の並び。
+  + [Webサービス識別子](#web-service-identifier)、ソリダス `/`、[妥当なファイル名](#valid-filename)の並び。
 * <a name="web-service-identifier">「Webサービス識別子」</a>はファイルの所在場所を表す文字列であり、
   [ASCII数字][ascii-digits]、[ASCII英小文字](#ascii-lowercase-alpha)、ハイフンマイナス `-` のみを含む文字列、
   あるいは[ドメイン][domain]である。
