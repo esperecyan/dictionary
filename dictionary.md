@@ -115,7 +115,7 @@
     - [HTMLのpattern属性][pattern]のように、全体に一致するものとして扱われる。
   + 辞書自体のロケールに依って、さらに以下の規則を追加する。
     - ja
-      * [ひらがな](#hiragana)、および[ひらがな化可能なカタカナ](#replaceable-katakana)のみを含むべきである。
+      - [ひらがな](#hiragana)、および[ひらがな化可能なカタカナ](#replaceable-katakana)のみを含むべきである。
 * `description`
   + 1レコードに0〜1個。
   + [CommonMark]で記述する。
