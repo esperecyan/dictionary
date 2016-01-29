@@ -20,7 +20,6 @@
     `CON` `PRN` `AUX` `CLOCK$` `NUL` `COM1` `COM2` `COM3` `COM4` `COM5` `COM6` `COM7` `COM8` `COM9`
     `LPT1` `LPT2` `LPT3` `LPT4` `LPT5` `LPT6` `LPT7` `LPT8` `LPT9`
   + [NFC]適用後に、変化する文字列であってはならない。
-
 * <a name="ascii-uppercase-alpha">「ASCII英大文字」</a>とは、`A` (U+0041) 〜 `Z` (U+005A) である。
 * <a name="ascii-lowercase-alpha">「ASCII英小文字」</a>とは、`a` (U+0061) 〜 `z` (U+007A) である。
 * <a name="hint-string">「ヒントに利用される文字列」</a> は、文字数や先頭・末尾の文字・文字列を
