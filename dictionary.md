@@ -24,13 +24,10 @@
 * <a name="ascii-lowercase-alpha">「ASCII英小文字」</a>とは、`a` (U+0061) 〜 `z` (U+007A) である。
 * <a name="hint-string">「ヒントに利用される文字列」</a> は、文字数や先頭・末尾の文字・文字列を
   ゲームの参加者に開示する際に利用される。また、その文字数はお手付きの判定にも利用される。
-* <a name="ascii-fullwidth">「ASCII全角形」</a>とは、`！` (U+FF01) 〜 `～` (U+FF5E) である。
 * <a name="controls">「制御文字」</a>とは、[Unicode Other カテゴリ (\\p{C})][tr44] に属する文字である。
 * <a name="whitespace">「空白文字」</a>とは、[Unicode Separator カテゴリ (\\p{Z})][tr44] に属する文字である。
 * <a name="combining">「結合文字」</a>とは、[Unicode Mark カテゴリ (\\p{M})][tr44] に属する文字である。
 * <a name="hiragana">「ひらがな」</a>とは、`〜` (U+301C)、`ぁ` (U+3041) 〜 `ゖ` (U+3096)、`ー` (U+30FC) である。
-* <a name="katakana">「カタカナ」</a>とは、`〜` (U+301C)、`ァ` (U+30A1) 〜 `ヺ` (U+30FA)、`ー` (U+30FC)、
-  `ㇰ` (U+31F0) 〜 `ㇿ` (U+31FF) である。
 * <a name="replaceable-katakana">「ひらがな化可能なカタカナ」</a>とは、`ァ` (U+30A1) 〜 `ヶ` (U+30F6) である。
 * 文字列中の<a name="katakana-to-hiragana">「カタカナをひらがな化」</a>するときは、各文字に対して、
   それが[ひらがな化可能なカタカナ](#replaceable-katakana)であるなら、
