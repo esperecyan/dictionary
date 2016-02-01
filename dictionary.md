@@ -169,10 +169,10 @@
 * 次の要素のみが含まれていなければならない。属性はグローバル属性を除いて、括弧内の属性のみ許可される。
   この規則は、HTMLへの変換が行われたコードに対して適用される:
   a (href), abbr, audio (src), b, bdi, bdo, blockquote (cite), br,
-  caption, cite, code, col (span), colgroup (span), data (value), dd, del (cite, datetime), dfn, div, dl, dt, em,
+  caption, cite, code, col (span), colgroup (span), dd, del (cite, datetime), dfn, div, dl, dt, em,
   figcaption, figure, h1, h2, h3, h4, h5, h6, hr, i, img (alt, height, src, width), ins (cite, datetime), kbd, li,
   ol (reversed, start, type), p, pre, q (cite), rp, rt, ruby, s, samp, small, span, strong, sub, sup,
-  table (sortable), tbody, td (colspan, rowspan), tfoot, th (abbr, colspan, rowspan, scope), thead, time (datetime),
+  table, tbody, td (colspan, rowspan), tfoot, th (abbr, colspan, rowspan, scope), thead, time (datetime),
   tr, u, ul, var, video (height, src, width), wbr
   - 次のグローバル属性が許可される: dir, lang, title, translate
   - href属性、cite属性の値は、[絶対URL][url-absolute]、または[素片付き絶対URL][url-absolute-with-fragment]
