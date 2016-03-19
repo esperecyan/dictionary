@@ -8,7 +8,7 @@
   + それが記述されているCSVファイルとともにアーカイブに格納されているファイルの名前。
   + [Webサービス識別子](#web-service-identifier)、ソリダス `/`、[妥当なファイル名](#valid-filename)の並び。
 * <a name="web-service-identifier">「Webサービス識別子」</a>はファイルの所在場所を表す文字列であり、
-  [ASCII数字][ascii-digits]、[ASCII英小文字](#ascii-lowercase-alpha)、ハイフンマイナス `-` のみを含む文字列、
+  [ASCII数字][ascii-digits]、[ASCII英小文字][lowercase-ascii-letters]、ハイフンマイナス `-` のみを含む文字列、
   あるいは[ドメイン][domain]である。
 * <a name="valid-filename">「妥当なファイル名」</a>とは、
   [拡張子を除くファイル名](#filename-without-extension)が次の規則に合致する文字列である。
@@ -20,8 +20,6 @@
     `CON` `PRN` `AUX` `CLOCK$` `NUL` `COM1` `COM2` `COM3` `COM4` `COM5` `COM6` `COM7` `COM8` `COM9`
     `LPT1` `LPT2` `LPT3` `LPT4` `LPT5` `LPT6` `LPT7` `LPT8` `LPT9`
   + [NFC]適用後に、変化する文字列であってはならない。
-* <a name="ascii-uppercase-alpha">「ASCII英大文字」</a>とは、`A` (U+0041) 〜 `Z` (U+005A) である。
-* <a name="ascii-lowercase-alpha">「ASCII英小文字」</a>とは、`a` (U+0061) 〜 `z` (U+007A) である。
 * <a name="hint-string">「ヒントに利用される文字列」</a> は、文字数や先頭・末尾の文字・文字列を
   ゲームの参加者に開示する際に利用される。また、その文字数はお手付きの判定にも利用される。
 * <a name="controls">「制御文字」</a>とは、[Unicode Other カテゴリ (\\p{C})][tr44] に属する文字である。
@@ -35,7 +33,8 @@
 * <a name="real-number">「実数」</a>とは、
   正規表現 `/^((0|-?[1-9][0-9]*)|-?(0|[1-9][0-9]*)\.[0-9]*[1-9])$/` に一致する10進数である。
 
-[ascii-digits]: http://www.hcn.zaq.ne.jp/___/WEB/URL-ja.html#ascii-digits
+[ascii-digits]: http://www.hcn.zaq.ne.jp/___/WEB/HTML-infrastructure-ja.html#lowercase-ascii-letters
+[lowercase-ascii-letters]: http://www.hcn.zaq.ne.jp/___/WEB/HTML-infrastructure-ja.html#lowercase-ascii-letters
 [domain]: http://www.hcn.zaq.ne.jp/___/WEB/URL-ja.html#syntax-host-domain
 [ascii-case-insensitive]: http://www.hcn.zaq.ne.jp/___/WEB/DOM4-ja.html#ascii-case-insensitive
 [NFC]: https://wiki.suikawiki.org/n/NFC
@@ -106,7 +105,7 @@
     ソリダス `/` 単体のフィールドは正規表現文字列とみなさない。
     - 拡張正規表現として妥当な文字列でなければならない。
     - POSIX文字クラスなど、角括弧で括られた部分の内部で角括弧を用いる構文を使用してはならない。
-    - [ASCII英大文字](#ascii-uppercase-alpha)、[ひらがな化可能なカタカナ](#replaceable-katakana)を含んではならない。
+    - [ASCII大文字][uppercase-ascii-letters]、[ひらがな化可能なカタカナ](#replaceable-katakana)を含んではならない。
     - スリダス `/` は文字クラス内を含め、すべてエスケープしなければならない。
     - 補助文字を使用してはならない。
     - [HTMLのpattern属性][pattern]のように、全体に一致するものとして扱われる。
@@ -139,6 +138,7 @@
   + 並べ替え問題など、選択肢が表示されていなければ問題が成立しない場合に、値として `selection` を指定する。
 
 [NFKC]: https://wiki.suikawiki.org/n/NFKC
+[uppercase-ascii-letters]: http://www.hcn.zaq.ne.jp/___/WEB/HTML-infrastructure-ja.html#uppercase-ascii-letters
 [ascii-lowercase]: http://www.hcn.zaq.ne.jp/___/WEB/URL-ja.html#ascii-lowercase
 [application/x-www-form-urlencoded]: http://www.hcn.zaq.ne.jp/___/WEB/URL-ja.html#application/x-www-form-urlencoded
 [pattern]: https://developer.mozilla.org/docs/Web/HTML/Element/Input#attr-pattern
@@ -226,7 +226,7 @@
   これらのファイルの拡張子は、表[拡張子](#extension)で示すものでなければならない。
 * アーカイブ中のCSVファイルの名前は `dictionary.csv` でなければならない。
 * アーカイブ中のファイルの[拡張子を除くファイル名](#filename-without-extension)は、次の規則に合致しなければならない。
-  + [ASCII数字][ascii-digits]、[ASCII英小文字](#ascii-lowercase-alpha)、ハイフンマイナス `-`、ローライン `_` のみを含む。
+  + [ASCII数字][ascii-digits]、[ASCII英小文字][lowercase-ascii-letters]、ハイフンマイナス `-`、ローライン `_` のみを含む。
   + 先頭の文字がハイフンマイナスではない。
   + 次のいずれにも一致しない:
     `con` `prn` `aux` `nul` `com1` `com2` `com3` `com4` `com5` `com6` `com7` `com8` `com9`
