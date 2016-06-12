@@ -32,6 +32,11 @@
 * <a name="integer">「整数」</a>とは、正規表現 `/^(0|-?[1-9][0-9]*)$/` に一致する10進数である。
 * <a name="real-number">「実数」</a>とは、
   正規表現 `/^((0|-?[1-9][0-9]*)|-?(0|[1-9][0-9]*)\.[0-9]*[1-9])$/` に一致する10進数である。
+* 文字列を<a name="convert-for-comparison">「比較用に変換」</a>するときは、以下の手順を実行する。
+  1. [NFKC]を適用する。
+  1. [制御文字](#controls)、[空白文字](#whitespace)、[結合文字](#combining)を取り除く。
+  1. [ASCII小文字化][ascii-lowercase]、[カタカナをひらがな化](#katakana-to-hiragana)する。
+  1. [同一視する文字](#equivalent)表の置換前列の文字を置換後列の文字に置き換える。
 
 [ascii-digits]: http://www.hcn.zaq.ne.jp/___/WEB/HTML-infrastructure-ja.html#lowercase-ascii-letters
 [lowercase-ascii-letters]: http://www.hcn.zaq.ne.jp/___/WEB/HTML-infrastructure-ja.html#lowercase-ascii-letters
@@ -39,6 +44,15 @@
 [ascii-case-insensitive]: http://www.hcn.zaq.ne.jp/___/WEB/DOM4-ja.html#ascii-case-insensitive
 [NFC]: https://wiki.suikawiki.org/n/NFC
 [tr44]: http://www.unicode.org/reports/tr44/#GC_Values_Table
+[NFKC]: https://wiki.suikawiki.org/n/NFKC
+
+### <a name="equivalent">同一視する文字</a>
+| 置換前        | 置換後        |
+|---------------|---------------|
+| `~` (U+007E)  | `〜` (U+301C) |
+| `'` (U+0027)  | `’` (U+2019) |
+| `"` (U+0022)  | `”` (U+201D) |
+| `“` (U+201C) | `”` (U+201D) |
 
 <a name="base">基底となるファイル形式</a>
 --------------------------------------------------------------------------------
@@ -98,8 +112,7 @@
     `text` フィールド値が1個目の `answer` フィールド値として利用される。
   + [NFKC]適用後に、変化する文字列であってはならない。
   + [制御文字](#controls)、[空白文字](#whitespace)、[結合文字](#combining)を含んではならない。
-  + ゲーム中では[ASCII小文字化][ascii-lowercase]、[カタカナをひらがな化](#katakana-to-hiragana)、
-    [同一視する文字](#equivalent)表の置換前列の文字を置換後列の文字に置き換えて扱わなければならない。
+  + ゲーム中では[比較用に変換](#convert-for-comparison)して扱わなければならない。
   + `type` フィールドに `selection` が指定されている場合、`option` フィールドのいずれかと同一の文字列でなければならない。 
   + 先頭、および末尾の文字がソリダス `/` である場合、<a name="regexp">正規表現文字列</a>として扱う。
     ソリダス `/` 単体のフィールドは正規表現文字列とみなさない。
@@ -137,7 +150,6 @@
   + 1レコードに0〜1個。
   + 並べ替え問題など、選択肢が表示されていなければ問題が成立しない場合に、値として `selection` を指定する。
 
-[NFKC]: https://wiki.suikawiki.org/n/NFKC
 [uppercase-ascii-letters]: http://www.hcn.zaq.ne.jp/___/WEB/HTML-infrastructure-ja.html#uppercase-ascii-letters
 [ascii-lowercase]: http://www.hcn.zaq.ne.jp/___/WEB/URL-ja.html#ascii-lowercase
 [application/x-www-form-urlencoded]: http://www.hcn.zaq.ne.jp/___/WEB/URL-ja.html#application/x-www-form-urlencoded
@@ -158,7 +170,7 @@
   + 辞書自体の説明文。
 * `@regard`
   + 正規表現における文字クラスで指定する。つまり、角括弧 `[` `]` で括られた文字列を指定する。
-  + コメントがどのような文字列のみで構成されていればお手付きと判断するかを決める。
+  + コメントを[比較用に変換](#convert-for-comparison)したとき、どのような文字列のみで構成されていればお手付きと判断するかを決める。
   + 省略された場合の既定値は `[〜ぁ-ゔー]` である。
 
 ### <a name="restrict-commonmark">CommonMarkの制限</a>
@@ -281,8 +293,7 @@
   + 実装側で設定した制限を超えた部分を除去した場合、
     除去が行われた辞書データを基に再出力された辞書ファイルは、元の辞書ファイルとは異なる辞書として扱うべきである。
 * 「ゲームの参加者が入力した文字列」についてお手付きや正誤の判定を行う場合、
-  [NFKC]を適用した後、[ASCII小文字化][ascii-lowercase]、[カタカナをひらがな化](#katakana-to-hiragana)、
-  [同一視する文字](#equivalent)表の置換前列の文字を置換後列の文字に置き換えて扱わなければならない。
+  [比較用に変換](#convert-for-comparison)して扱わなければならない。
 * 辞書ファイルを再出力する際、未知のフィールド名のフィールドを除去してはならない。
   また、同名フィールドの出現数が制限されている場合も、制限を超えた部分のフィールドを除去してはならない。
 * 辞書ファイルを再出力する際、specificsフィールドの未知の名前の組を除去してはならない。
@@ -291,14 +302,6 @@
 [byte]: http://www.hcn.zaq.ne.jp/___/WEB/Encoding-ja.html#byte
 [si-prefixes]: https://ja.wikipedia.org/wiki/SI%E6%8E%A5%E9%A0%AD%E8%BE%9E
 [binary-prefix]: https://ja.wikipedia.org/wiki/2%E9%80%B2%E6%8E%A5%E9%A0%AD%E8%BE%9E
-
-### <a name="equivalent">同一視する文字</a>
-| 置換前        | 置換後        |
-|---------------|---------------|
-| `~` (U+007E)  | `〜` (U+301C) |
-| `'` (U+0027)  | `’` (U+2019) |
-| `"` (U+0022)  | `”` (U+201D) |
-| `“` (U+201C) | `”` (U+201D) |
 
 <a name="rfc4180-7111">[RFC4180]、[RFC7111]の解釈</a>
 --------------------------------------------------------------------------------
