@@ -8,15 +8,15 @@
   + それが記述されているCSVファイルとともにアーカイブに格納されているファイルの名前。
   + [Webサービス識別子](#web-service-identifier)、ソリダス `/`、[妥当なファイル名](#valid-filename)の並び。
 * <a name="web-service-identifier">「Webサービス識別子」</a>はファイルの所在場所を表す文字列であり、
-  [ASCII数字][ascii-digits]、[ASCII英小文字][lowercase-ascii-letters]、ハイフンマイナス `-` のみを含む文字列、
-  あるいは[ドメイン][domain]である。
+  [ASCII数字][ascii-digits]、[ASCII英小文字][ascii-alpha-lower]、ハイフンマイナス `-` のみを含む文字列、
+  あるいは[ドメイン文字列][domain]である。
 * <a name="valid-filename">「妥当なファイル名」</a>とは、
   [拡張子を除くファイル名](#filename-without-extension)が次の規則に合致する文字列である。
   また、拡張子は、表[拡張子](#extension)で示すものに合致する。
   + [制御文字](#controls)、および `"` `*` `.` `/` `:` `<` `>` `?` `\` `|` を含んではならない。
   + 先頭、末尾が[空白文字](#whitespace)であってはならない。
     また、[空白文字](#whitespace)単体、および空文字列であってはならない。
-  +  [ASCII文字大小無視][ascii-case-insensitive]で、次のいずれにも一致しない:
+  +  [ASCII大小無視][ascii-case-insensitive]で、次のいずれにも一致しない:
     `CON` `PRN` `AUX` `CLOCK$` `NUL` `COM1` `COM2` `COM3` `COM4` `COM5` `COM6` `COM7` `COM8` `COM9`
     `LPT1` `LPT2` `LPT3` `LPT4` `LPT5` `LPT6` `LPT7` `LPT8` `LPT9`
   + [NFC]適用後に、変化する文字列であってはならない。
@@ -38,10 +38,10 @@
   1. [ASCII小文字化][ascii-lowercase]、[カタカナをひらがな化](#katakana-to-hiragana)する。
   1. [同一視する文字](#equivalent)表の置換前列の文字を置換後列の文字に置き換える。
 
-[ascii-digits]: http://www.hcn.zaq.ne.jp/___/WEB/HTML-infrastructure-ja.html#lowercase-ascii-letters
-[lowercase-ascii-letters]: http://www.hcn.zaq.ne.jp/___/WEB/HTML-infrastructure-ja.html#lowercase-ascii-letters
-[domain]: http://www.hcn.zaq.ne.jp/___/WEB/URL-ja.html#syntax-host-domain
-[ascii-case-insensitive]: http://www.hcn.zaq.ne.jp/___/WEB/DOM4-ja.html#ascii-case-insensitive
+[ascii-digits]: https://triple-underscore.github.io/infra-ja.html#ascii-digit
+[ascii-alpha-lower]: https://triple-underscore.github.io/infra-ja.html#ascii-alpha-lower
+[domain]: https://triple-underscore.github.io/URL-ja.html#syntax-host-domain
+[ascii-case-insensitive]: https://triple-underscore.github.io/infra-ja.html#ascii-case-insensitive
 [NFC]: https://wiki.suikawiki.org/n/NFC
 [tr44]: http://www.unicode.org/reports/tr44/#GC_Values_Table
 [NFKC]: https://wiki.suikawiki.org/n/NFKC
@@ -117,7 +117,7 @@
     ソリダス `/` 単体のフィールドは正規表現文字列とみなさない。
     - 拡張正規表現として妥当な文字列でなければならない。
     - POSIX文字クラスなど、角括弧で括られた部分の内部で角括弧を用いる構文を使用してはならない。
-    - [ASCII大文字][uppercase-ascii-letters]、[ひらがな化可能なカタカナ](#replaceable-katakana)を含んではならない。
+    - [ASCII英大文字][ascii-alpha-upper]、[ひらがな化可能なカタカナ](#replaceable-katakana)を含んではならない。
     - ソリダス `/` は文字クラス内を含め、すべてエスケープしなければならない。
     - 補助文字を使用してはならない。
     - [HTMLのpattern属性][pattern]のように、全体に一致するものとして扱われる。
@@ -149,13 +149,12 @@
   + 1レコードに0〜1個。
   + 並べ替え問題など、選択肢が表示されていなければ問題が成立しない場合に、値として `selection` を指定する。
 
-[uppercase-ascii-letters]: http://www.hcn.zaq.ne.jp/___/WEB/HTML-infrastructure-ja.html#uppercase-ascii-letters
-[ascii-lowercase]: http://www.hcn.zaq.ne.jp/___/WEB/URL-ja.html#ascii-lowercase
-[application/x-www-form-urlencoded]: http://www.hcn.zaq.ne.jp/___/WEB/URL-ja.html#application/x-www-form-urlencoded
+[ascii-alpha-upper]: https://triple-underscore.github.io/infra-ja.html#ascii-alpha-upper
+[ascii-lowercase]: https://triple-underscore.github.io/infra-ja.html#ascii-lowercase
+[application/x-www-form-urlencoded]: https://triple-underscore.github.io/URL-ja.html#application/x-www-form-urlencoded
 [pattern]: https://developer.mozilla.org/docs/Web/HTML/Element/Input#attr-pattern
 [CommonMark]: http://spec.commonmark.org/0.22/
-[url-absolute]: http://www.hcn.zaq.ne.jp/___/WEB/URL-ja.html#syntax-url-absolute
-[url-absolute-with-fragment]: http://www.hcn.zaq.ne.jp/___/WEB/URL-ja.html#syntax-url-absolute-with-fragment
+[url-absolute-with-fragment]: https://triple-underscore.github.io/URL-ja.html#syntax-url-absolute-with-fragment
 
 ### <a name="meta-fields">メタフィールド</a>
 メタフィールドは、レコードではなく辞書自体に関連付けられるフィールドであり、フィールド名は `@` で始まる。
@@ -185,9 +184,11 @@
   table, tbody, td (colspan, rowspan), tfoot, th (abbr, colspan, rowspan, scope), thead, time (datetime),
   tr, u, ul, var, video (height, src, width), wbr
   - 次のグローバル属性が許可される: dir, lang, title, translate
-  - href属性、cite属性の値は、[絶対URL][url-absolute]、または[素片付き絶対URL][url-absolute-with-fragment]
-	でなければならない。また、スキームは `https`、または `http` でなければならない。
+  - href属性、cite属性の値は、[素片付き絶対URL文字列][url-absolute-with-fragment]でなければならない。
+	また、その[URLスキーム文字列][url-scheme]は `https`、または `http` でなければならない。
   - src属性の値は、[ファイル所在](#file-location)でなければならない。
+
+[url-scheme]: https://triple-underscore.github.io/URL-ja.html#syntax-url-scheme
 
 ### <a name="source-commonmark">出所を記述するためのCommonMark</a>
 * セクショニングコンテンツの直下に置かれなくてもよい。
@@ -195,8 +196,8 @@
   この規則は、HTMLへの変換が行われたコードに対して適用される:
   a (href), b, bdi, bdo, br, cite, i, p, rp, rt, ruby, sub, sup, time (datetime), u, wbr
   - 次のグローバル属性が許可される: dir, lang, title, translate
-  - href属性の値は、[絶対URL][url-absolute]、または[素片付き絶対URL][url-absolute-with-fragment]
-	でなければならない。また、スキームは `https`、または `http` でなければならない。
+  - href属性の値は、[素片付き絶対URL文字列][url-absolute-with-fragment]でなければならない。
+	また、その[URLスキーム文字列][url-scheme]は `https`、または `http` でなければならない。
 
 ### <a name="specifics">specificsフィールドの名前</a>
 名前が違う組同士の順序に意味はない。
@@ -237,7 +238,7 @@
   これらのファイルの拡張子は、表[拡張子](#extension)で示すものでなければならない。
 * アーカイブ中のCSVファイルの名前は `dictionary.csv` でなければならない。
 * アーカイブ中のファイルの[拡張子を除くファイル名](#filename-without-extension)は、次の規則に合致しなければならない。
-  + [ASCII数字][ascii-digits]、[ASCII英小文字][lowercase-ascii-letters]、ハイフンマイナス `-`、ローライン `_` のみを含む。
+  + [ASCII数字][ascii-digits]、[ASCII英小文字][ascii-alpha-lower]、ハイフンマイナス `-`、ローライン `_` のみを含む。
   + 先頭の文字がハイフンマイナスではない。
   + 次のいずれにも一致しない:
     `con` `prn` `aux` `nul` `com1` `com2` `com3` `com4` `com5` `com6` `com7` `com8` `com9`
@@ -298,7 +299,7 @@
 * 辞書ファイルを再出力する際、specificsフィールドの未知の名前の組を除去してはならない。
   また、同名の組の出現数が制限されている場合も、制限を超えた部分の組を除去してはならない。
 
-[byte]: http://www.hcn.zaq.ne.jp/___/WEB/Encoding-ja.html#byte
+[byte]: https://triple-underscore.github.io/infra-ja.html#byte
 [si-prefixes]: https://ja.wikipedia.org/wiki/SI%E6%8E%A5%E9%A0%AD%E8%BE%9E
 [binary-prefix]: https://ja.wikipedia.org/wiki/2%E9%80%B2%E6%8E%A5%E9%A0%AD%E8%BE%9E
 
@@ -364,7 +365,7 @@ TEXTDATA =  %x20-21 / %x23-2B / %x2D-7E / %xA0-10FFFD
 
 [2. Definition of the CSV Format]: https://tools.ietf.org/html/rfc4180#section-2
 [5.1. The text/csv media type]: https://tools.ietf.org/html/rfc7111#section-5.1
-[ascii-code-point]: http://www.hcn.zaq.ne.jp/___/WEB/Encoding-ja.html#ascii-code-point
+[ascii-code-point]: https://triple-underscore.github.io/infra-ja.html#ascii-code-point
 
 <a name="example">辞書ファイルの例</a>
 --------------------------------------------------------------------------------
