@@ -172,31 +172,40 @@
   + 省略された場合の既定値は `[〜ぁ-ゔー]` である。
 
 ### <a name="restrict-commonmark">CommonMarkの制限</a>
-* 全体をセクショニングコンテンツの直下に置かれなければならない。
-  また、見出し要素が存在し、かつ最初の見出し要素よりも前にノードが存在すれば、
-  最初の見出し以降をsection要素に内包しなければならない。
-* 次の要素のみが含まれていなければならない。属性はグローバル属性を除いて、括弧内の属性のみ許可される。
-  この規則は、HTMLへの変換が行われたコードに対して適用される:
-  a (href), abbr, audio (src), b, bdi, bdo, blockquote (cite), br,
-  caption, cite, code, col (span), colgroup (span), dd, del (cite, datetime), details, dfn, div, dl, dt, em,
-  figcaption, figure, h1, h2, h3, h4, h5, h6, hr, i, img (alt, height, src, width), ins (cite, datetime), kbd, li,
-  ol (reversed, start, type), p, pre, q (cite), rp, rt, ruby, s, samp, small, span, strong, sub, summary, sup,
-  table, tbody, td (colspan, rowspan), tfoot, th (abbr, colspan, rowspan, scope), thead, time (datetime),
-  tr, u, ul, var, video (height, src, width), wbr
-  - 次のグローバル属性が許可される: dir, lang, title, translate
-  - href属性、cite属性の値は、[素片付き絶対URL文字列][url-absolute-with-fragment]でなければならない。
-	また、その[URLスキーム文字列][url-scheme]は `https`、または `http` でなければならない。
-  - src属性の値は、[ファイル所在](#file-location)でなければならない。
+以下の節で示す要素のみが含まれていなければならない。属性はグローバル属性を除いて、括弧内の属性のみ許可される。
+この規則は、HTMLへの変換が行われたコードに対して適用される。
+
+#### <a name="non-source-commonmark">CommonMark</a>
+a (href), abbr, audio (src), b, bdi, bdo, blockquote (cite), br,
+caption, cite, code, col (span), colgroup (span), dd, del (cite, datetime), details, dfn, div, dl, dt, em,
+figcaption, figure, h1, h2, h3, h4, h5, h6, hr, i, img (alt, height, src, width), ins (cite, datetime), kbd, li,
+ol (reversed, start, type), p, pre, q (cite), rp, rt, ruby, s, samp, small, span, strong, sub, summary, sup,
+table, tbody, td (colspan, rowspan), tfoot, th (abbr, colspan, rowspan, scope), thead, time (datetime),
+tr, u, ul, var, video (height, src, width), wbr
+
+- 次のグローバル属性が許可される: dir, lang, title, translate
+- href属性、cite属性の値は、[素片付き絶対URL文字列][url-absolute-with-fragment]でなければならない。
+  また、その[URLスキーム文字列][url-scheme]は `https`、または `http` でなければならない。
+- src属性の値は、[ファイル所在](#file-location)でなければならない。
+
+[見出しコンテンツ][heading-content]が許可されるため、
+フィールド値をHTMLに埋め込む場合、[ページのアウトライン][outline]が壊れないように注意を要する。
+
+また、フィールド値を[セクショニングコンテンツ][sectioning-content]、または[セクショニングルート][sectioning-root]直下に置く場合、
+最初の見出しコンテンツよりも前に存在するノードは、最初の見出しコンテンツによる暗黙のセクションの一部として扱われる。
+その場合、何らかの見出しコンテンツ (たとえば、空のh1要素) をフィールド値の前に挿入する必要があるだろう。
 
 [url-scheme]: https://triple-underscore.github.io/URL-ja.html#syntax-url-scheme
+[heading-content]: https://triple-underscore.github.io/HTML-dom-ja.html#heading-content
+[outline]: https://triple-underscore.github.io/HTML-sections-ja.html#headings-and-sections
+[sectioning-content]: https://triple-underscore.github.io/HTML-dom-ja.html#sectioning-content
+[sectioning-root]: https://triple-underscore.github.io/HTML-sections-ja.html#sectioning-root
 
-### <a name="source-commonmark">出所を記述するためのCommonMark</a>
-* セクショニングコンテンツの直下に置かれなくてもよい。
-* 次の要素のみが含まれていなければならない。属性はグローバル属性を除いて、括弧内の属性のみ許可される。
-  この規則は、HTMLへの変換が行われたコードに対して適用される:
-  a (href), b, bdi, bdo, br, cite, i, p, rp, rt, ruby, sub, sup, time (datetime), u, wbr
-  - 次のグローバル属性が許可される: dir, lang, title, translate
-  - href属性の値は、[素片付き絶対URL文字列][url-absolute-with-fragment]でなければならない。
+#### <a name="source-commonmark">出所を記述するためのCommonMark</a>
+a (href), b, bdi, bdo, br, cite, i, p, rp, rt, ruby, sub, sup, time (datetime), u, wbr
+
+- 次のグローバル属性が許可される: dir, lang, title, translate
+- href属性の値は、[素片付き絶対URL文字列][url-absolute-with-fragment]でなければならない。
 	また、その[URLスキーム文字列][url-scheme]は `https`、または `http` でなければならない。
 
 ### <a name="specifics">specificsフィールドの名前</a>
