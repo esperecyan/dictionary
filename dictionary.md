@@ -6,20 +6,8 @@
   ファイル名について、先頭から最初に登場するフルストップ `.` の手前までの部分である。
 * <a name="file-location">「ファイル所在」</a>は、次のいずれかである:
   + それが記述されているCSVファイルとともにアーカイブに格納されているファイルの名前。
-  + [Webサービス識別子](#web-service-identifier)、ソリダス `/`、[妥当なファイル名](#valid-filename)の並び。
-* <a name="web-service-identifier">「Webサービス識別子」</a>はファイルの所在場所を表す文字列であり、
-  [ASCII数字][ascii-digits]、[ASCII英小文字][ascii-alpha-lower]、ハイフンマイナス `-` のみを含む文字列、
-  あるいは[ドメイン文字列][domain]である。
-* <a name="valid-filename">「妥当なファイル名」</a>とは、
-  [拡張子を除くファイル名](#filename-without-extension)が次の規則に合致する文字列である。
-  また、拡張子は、表[拡張子](#extension)で示すものに合致する。
-  + [制御文字](#controls)、および `"` `*` `.` `/` `:` `<` `>` `?` `\` `|` を含んではならない。
-  + 先頭、末尾が[空白文字](#whitespace)であってはならない。
-    また、[空白文字](#whitespace)単体、および空文字列であってはならない。
-  +  [ASCII大小無視][ascii-case-insensitive]で、次のいずれにも一致しない:
-    `CON` `PRN` `AUX` `CLOCK$` `NUL` `COM1` `COM2` `COM3` `COM4` `COM5` `COM6` `COM7` `COM8` `COM9`
-    `LPT1` `LPT2` `LPT3` `LPT4` `LPT5` `LPT6` `LPT7` `LPT8` `LPT9`
-  + [NFC]適用後に、変化する文字列であってはならない。
+  + [URLスキーム文字列][url-scheme-string]が `https` `tag` `urn` に[ASCII大小無視][ascii-case-insensitive]で一致する
+    [素片付き絶対URL文字列][absolute-url-with-fragment-string]。
 * <a name="hint-string">「ヒントに利用される文字列」</a> は、文字数や先頭・末尾の文字・文字列を
   ゲームの参加者に開示する際に利用される。また、その文字数はお手付きの判定にも利用される。
 * <a name="controls">「制御文字」</a>とは、[Unicode Other カテゴリ (\\p{C})][tr44] に属する文字である。
@@ -38,11 +26,9 @@
   1. [ASCII小文字化][ascii-lowercase]、[カタカナをひらがな化](#katakana-to-hiragana)する。
   1. [同一視する文字](#equivalent)表の置換前列の文字を置換後列の文字に置き換える。
 
-[ascii-digits]: https://triple-underscore.github.io/infra-ja.html#ascii-digit
-[ascii-alpha-lower]: https://triple-underscore.github.io/infra-ja.html#ascii-alpha-lower
-[domain]: https://triple-underscore.github.io/URL-ja.html#syntax-host-domain
+[url-scheme-string]: https://triple-underscore.github.io/URL-ja.html#url-scheme-string
 [ascii-case-insensitive]: https://triple-underscore.github.io/infra-ja.html#ascii-case-insensitive
-[NFC]: https://wiki.suikawiki.org/n/NFC
+[absolute-url-with-fragment-string]: https://triple-underscore.github.io/URL-ja.html#absolute-url-with-fragment-string
 [tr44]: http://www.unicode.org/reports/tr44/#GC_Values_Table
 [NFKC]: https://wiki.suikawiki.org/n/NFKC
 
@@ -257,6 +243,9 @@ a (href), b, bdi, bdo, br, cite, i, p, rp, rt, ruby, sub, sup, time (datetime), 
   また、圧縮後の容量は512MiB以下にするべきである。実装は受け入れる容量を制限してもよい。
 * アーカイブ中のファイル数は10000個以下でなければならない。また、2000個以下にするべきである。
   実装は受け入れるファイル数を制限してもよい。
+
+[ascii-digits]: https://triple-underscore.github.io/infra-ja.html#ascii-digit
+[ascii-alpha-lower]: https://triple-underscore.github.io/infra-ja.html#ascii-alpha-lower
 
 ### <a name="extension">拡張子</a>
 | ファイル形式            | 拡張子              |
