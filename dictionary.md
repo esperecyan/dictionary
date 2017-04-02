@@ -1,5 +1,34 @@
 主に単語で答えるゲームにおける汎用的な辞書形式
 ================================================================================
+* [用語などについて](#terminology)
+  + [同一視する文字](#equivalent)
+* [基底となるファイル形式](#base)
+  + [各フィールドに対する制限](#field-limitations)
+* [各フィールドの構造](#fields)
+  + [メタフィールド](#meta-fields)
+  + [CommonMarkの制限](#restrict-commonmark)
+    - [CommonMark](#non-source-commonmark)
+    - [出所を記述するためのCommonMark](#source-commonmark)
+  + [specificsフィールドの名前](#specifics)
+  + [ヘッダ行](#header)
+* [画像・音声・動画ファイルを含む場合のファイル形式](#with-image-audio-video)
+  + [拡張子](#extension)
+  + [画像ファイルの形式](#image)
+    - [SVGの制限](#restrict-svg)
+  + [音声ファイルの形式](#audio)
+  + [動画ファイルの形式](#video)
+* [実装に対する要件](#implementations)
+* [RFC4180、RFC7111の解釈](#rfc4180-7111)
+* [辞書ファイルの例](#example)
+  + [簡単な形](#simple)
+  + [画像や解説などを含む形](#including-images-descriptions)
+  + [音声ファイルを含む形](#including-audios)
+  + [お題の出題頻度の設定 (重み付け)](#weight)
+  + [選択・並べ替え問題](#multiple-choice-or-sort-questions)
+  + [ひらがな以外で答える辞書・正規表現を含む辞書](#words-including-not-hiraganas-or-regexp)
+* [参加・協力](#contribution)
+* [ライセンス](#licence)
+
 <a name="terminology">用語などについて</a>
 --------------------------------------------------------------------------------
 * <a name="filename-without-extension">「拡張子を除くファイル名」</a>とは、
@@ -367,7 +396,7 @@ TEXTDATA =  %x20-21 / %x23-2B / %x2D-7E / %xA0-10FFFD
 
 <a name="example">辞書ファイルの例</a>
 --------------------------------------------------------------------------------
-### 簡単な形
+### <a name="simple">簡単な形</a>
 
 ```csv
 たいよう
@@ -381,7 +410,7 @@ TEXTDATA =  %x20-21 / %x23-2B / %x2D-7E / %xA0-10FFFD
 | ちきゅう |
 | カロン   |
 
-### 画像や解説などを含む形
+### <a name="including-images-descriptions">画像や解説などを含む形</a>
 
 ```csv
 text,image,answer,answer,description,@title,@summary
@@ -404,7 +433,7 @@ text,image,answer,answer,description,@title,@summary
 | 地球   | earth.png  | ちきゅう |          | 惑星。      |        |                                |
 | カロン | charon.png |          |          | "冥王星の衛星。<br><br>> カロンは1978年6月22日にアメリカの天文学者ジェームズ・クリスティーによって発見された。<br>> その後、冥王星が冥府の王プルートーの名に因むことから、<br>> この衛星はギリシア神話の冥府の川・アケローンの渡し守カローンにちなんで「カロン」と命名された。<br>> なおクリスティーは当初から一貫してCharonの「char」を<br>> 妻シャーリーン（Charlene） のニックネーム「シャー（Char）」と同じように発音していたため、<br>> これが英語圏で定着して「シャーロン」と呼ばれるようになった。<br>引用元: \[カロン (衛星) - Wikipedia](https\://ja.wikipedia.org/wiki/%E3%82%AB%E3%83%AD%E3%83%B3_(%E8%A1%9B%E6%98%9F))" | |
 
-### 音声ファイルを含む形
+### <a name="including-audios">音声ファイルを含む形</a>
 
 ```csv
 text,audio,specifics,answer,answer,@title
@@ -419,7 +448,7 @@ text,audio,specifics,answer,answer,@title
 | 魔王             | erlking.mp4        |                   | まおう                   |        |                | 
 | ラデツキー行進曲 | radetzky-march.mp4 |                   | らでつきーこうしんきょく |        |                |
 
-### お題の出題頻度の設定 (重み付け)
+### <a name="weight">お題の出題頻度の設定 (重み付け)</a>
 
 ```csv
 text,weight,description,@title
@@ -438,7 +467,7 @@ text,weight,description,@title
 | ヤドラン   |        |                                         |          |
 | ミュウ     | 0.5    | このお題は他のお題より出題されにくい。  |          |
 
-### 選択・並べ替え問題
+### <a name="multiple-choice-or-sort-questions">選択・並べ替え問題</a>
 
 以降、CSVを省略して表としての例のみ示す。
 
@@ -452,7 +481,7 @@ text,weight,description,@title
 
 ゲームの種類や難易度設定などに応じて、選択肢を表示したりしなかったりする問題 (上の「太陽」の例) が作成可能である。
 
-### ひらがな以外で答える辞書・正規表現を含む辞書
+### <a name="words-including-not-hiraganas-or-regexp">ひらがな以外で答える辞書・正規表現を含む辞書</a>
 
 | text        | answer   | answer         | @title | @regard             |
 |-------------|----------|----------------|--------|---------------------|
